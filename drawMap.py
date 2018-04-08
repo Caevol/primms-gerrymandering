@@ -55,11 +55,9 @@ def drawMap(regions, claims, centers):
 				#can.create_text(ratioX * (x + .5), ratioY * (y + .5), text = claims[y][x])
 				
 				if y < sizeY - 1 and claims[y][x] != claims[y + 1][x]:
-					print "horizontal"
 					can.create_line(ratioX * (x), ratioY * (y + 1), ratioX * (x + 1), ratioY * (y + 1), fill = "magenta", width = 5.0)
 	
 				if x < sizeX - 1 and claims[y][x] != claims[y][x + 1]:
-					print 'vertical'
 					can.create_line(ratioX * (x + 1), ratioY * (y), ratioX * (x + 1), ratioY * (y + 1), fill = "magenta", width = 5.0)
 
 	
