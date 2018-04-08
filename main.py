@@ -1,5 +1,7 @@
+from districtDivider import getVoronoiClaims, getPrimmsClaims
 from mapMaker import generateRandomMap, generateClusteredMap, getRandomCenters, getManualCenters, assignCenters, assignIndex
 from drawMap import drawMap
+
 
 simpleArea = [
 	['r', 'r', 'r', 'r', 'r', 'r', 'r', 'r', 'r', 'r',],
@@ -103,7 +105,10 @@ def main():
 	
 	centers = assignCenters(regions, centers)
 	centers = assignIndex(centers)
-	drawMap(regions, None, centers)
+	
+	claimsV = getVoronoiClaims(regions, centers)
+	
+	drawMap(regions, claimsV, centers)
 
 	
 	#get voronoi solution
