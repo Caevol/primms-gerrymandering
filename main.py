@@ -107,8 +107,10 @@ def main():
 	centers = assignIndex(centers)
 	
 	claimsV = getVoronoiClaims(regions, centers)
+	claimsP = getPrimmsClaims(regions, centers, .3)
 	
 	drawMap(regions, claimsV, centers)
+	drawMap(regions, claimsP, centers)
 
 	
 	#get voronoi solution
