@@ -1,4 +1,4 @@
-from mapMaker import generateRandomMap, generateClusteredMap, getRandomCenters, getManualCenters
+from mapMaker import generateRandomMap, generateClusteredMap, getRandomCenters, getManualCenters, assignCenters, assignIndex
 from drawMap import drawMap
 
 simpleArea = [
@@ -40,13 +40,23 @@ def regionMenu():
 		size = int(raw_input())
 		print 'number of parties?'
 		parties = int(raw_input())
-		regions = generateRandomMap(size, size, colors[:parties])
+		partyRatios = []
+		for i in xrange(parties):
+			print 'Member ratio for party', colors[i]
+			partyRatios.append(float(raw_input()))
+		
+		regions = generateRandomMap(size, size, colors[:parties], partyRatios)
 	elif result == 3:
 		print 'Size of map?'
 		size = int(raw_input())
 		print 'number of clusters?'
 		clusters = int(raw_input())
-		regions = generateClusteredMap(size, size, clusters, colors[:2])
+		partyRatios = []
+		for i in xrange(2):
+			print 'Member ratio for party', colors[i]
+			partyRatios.append(float(raw_input()))
+		
+		regions = generateClusteredMap(size, size, clusters, colors[:2], partyRatios)
 	elif result == 4:
 		print 'Not yet implemented'
 		return None
@@ -83,15 +93,18 @@ def main():
 		return
 	
 	print '\nNow displaying region map, undivided'
-	drawMap(regions, None, None)
+	#drawMap(regions, None, None)
 	
 	centers = centersMenu(regions)
 	if centers is None:
 		return
+		
+	#drawMap(regions, None, centers)
 	
-	print centers
-	
+	centers = assignCenters(regions, centers)
+	centers = assignIndex(centers)
 	drawMap(regions, None, centers)
+
 	
 	#get voronoi solution
 	#get multiagent solutions

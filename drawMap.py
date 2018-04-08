@@ -37,12 +37,17 @@ def drawMap(regions, claims, centers):
 				ratioX * (x+1), ratioY * (y + 1), fill = getColor(regions[y][x]))
 							
 			if claims != None:
-				can.create_text(ratioX * (x + .5), ratioY * (y + .5), text = claims[y][x])
+				can.create_text(ratioX * (x + .4), ratioY * (y + .4), text = claims[y][x])
 	
 	if centers != None:
 		for center in centers:
-			can.create_oval(ratioX * (center['x'] + .1), ratioY * (center['y'] + .1), 
-				ratioX * (center['x'] + .9), ratioY * (center['y'] + .9), fill = 'magenta')
+			if 'id' in center:
+				can.create_oval(ratioX * (center['x'] + .1), ratioY * (center['y'] + .1), 
+					ratioX * (center['x'] + .9), ratioY * (center['y'] + .9), fill = 'magenta')
+				can.create_text(ratioX * (center['x'] + .4), ratioY * (center['y'] + .4), text = center['id'])
+			else:
+				can.create_oval(ratioX * (center['x'] + .1), ratioY * (center['y'] + .1), 
+					ratioX * (center['x'] + .9), ratioY * (center['y'] + .9), fill = 'magenta')
 	
 	top.mainloop()
 			
