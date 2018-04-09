@@ -99,6 +99,7 @@ def cedeTerritory(regions, claims, centers, MIN_REGIONS):
 				i += 1
 		
 			#rnd, rndVal = min(enumerate(frontier[i:]), key = lambda g: g[1]['distance'])
+			#frontier = sorted(frontier, key = lambda g : g['distance'], reverse = True)
 			#print rnd
 			rnd = randint(i, len(frontier) - 1)
 			pos = frontier[rnd]
@@ -158,7 +159,7 @@ def getVoronoiClaims(regions, centers):
 				claims[y][x] = minCenter['id']
 	
 	
-	cedeTerritory(regions, claims, centers, int(float(len(regions) * len(regions[0])) / len(centers)) - 50)
+	cedeTerritory(regions, claims, centers, int(float(len(regions) * len(regions[0])) / len(centers)) - 250)
 	return claims
 
 
@@ -186,7 +187,7 @@ def claimRegion(x, y, id, claims, regions, totalClaims, frontier):
 # .5 : majority
 # .66 : hyper-majority
 def getPrimmsClaims(regions, centers, partyThreshold):
-	MIN_REGIONS = int(float(len(regions) * len(regions[0])) / len(centers)) - 50
+	MIN_REGIONS = int(float(len(regions) * len(regions[0])) / len(centers)) - 250
 	THRESHOLD_REGIONS = partyThreshold * MIN_REGIONS
 	
 	
