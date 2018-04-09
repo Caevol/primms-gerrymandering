@@ -20,6 +20,48 @@ def isFrontier(x, y, claims, id):
 	else:
 		return False
 		
+		
+def inRange(x, y, claims):
+	if x >= 0 and x < len(claims[0]) and y >= 0 and y < len(claims):
+		return True
+	return False
+		
+def isContinuous(x, y, claims):
+	arr = [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]]
+	id = claims[y][x]
+	started = False
+	startedIndex = -10000
+	ended = False
+	
+	for index, v in enumerate(arr):
+		if inRange(x + v[0], y + v[1], claims) and index == 0 and claims[y + v[1]][x + v[0]] == id:
+			i = 0
+			while i > -8 and claims[y + arr[i - 1][1]][x + arr[i - 1][0]] == id:
+				i -= 1
+			if i == -8:
+				return True
+			startedIndex = i
+			started = True
+	
+		if inRange(x + v[0], y + v[1], claims) and started == False and claims[y + v[1]][x + v[0]] == id:
+			started = True
+			startedIndex = index
+			
+		if index == len(arr) + startedIndex:
+			return True
+	
+		if inRange(x + v[0], y + v[1], claims) and ended and claims[y + v[1]][x + v[0]] == id:
+			return False
+				
+		if inRange(x + v[0], y + v[1], claims) and started and claims[y + v[1]][x + v[0]] != id:
+			ended = True
+			
+			
+		
+	
+	return True
+	
+		
 # cede territory
 def cedeTerritory(regions, claims, centers, MIN_REGIONS):
 	sizeY = len(claims)
@@ -37,19 +79,17 @@ def cedeTerritory(regions, claims, centers, MIN_REGIONS):
 	while len([f for f in scores if scores[f] < MIN_REGIONS]) != 0:
 		minRegions = [f for f in scores if scores[f] < MIN_REGIONS]
 		minId = minRegions[randint(0, len(minRegions) - 1)]
-		#minId = min(scores.iteritems(), key = lambda k : k[1])[0]
 		frontier = []
 		
-		#print minId, scores[minId], scores
 
 		for y in xrange(sizeY):
 			for x in xrange(sizeX):
 				if isFrontier(x, y, claims, minId):
-					frontier.append({'x':x, 'y':y})
+					frontier.append({'x':x, 'y':y, 'distance':getEuclideanDistance(x, y, centers[minId]['x'], centers[minId]['y'])})
 		
+		#print minId
 
 		while scores[minId] < MIN_REGIONS and len(frontier) > 0:
-			#print scores[minId]
 			
 			frontier = sorted(frontier, key = lambda g: scores[claims[g['y']][g['x']]])
 			frontier = [f for f in frontier if claims[f['y']][f['x']] != minId]
@@ -58,31 +98,47 @@ def cedeTerritory(regions, claims, centers, MIN_REGIONS):
 			while claims[frontier[i]['y']][frontier[i]['x']] != claims[frontier[-1]['y']][frontier[-1]['x']]:
 				i += 1
 		
+			#rnd, rndVal = min(enumerate(frontier[i:]), key = lambda g: g[1]['distance'])
+			#print rnd
 			rnd = randint(i, len(frontier) - 1)
 			pos = frontier[rnd]
-			del frontier[rnd]
-		
-			
-			
 			posX = pos['x']
 			posY = pos['y']
-						
+			
+			checkFailed = False
+			
+			for center in centers:
+				if center['x'] == posX and center['y'] == posY:
+					#print "CENTER", posX, posY
+					del frontier[rnd]
+					checkFailed = True
+			
+			if not isContinuous(posX, posY, claims):
+				#print posX, posY
+				del frontier[rnd]
+				checkFailed = True
+			
+			if checkFailed:
+				continue
+			
+			del frontier[rnd]
+			
 			scores[claims[posY][posX]] -= 1
+			scores[minId] += 1
 			claims[posY][posX] = minId
 			
-			scores[minId] += 1
 			
 			if isFrontier(posX + 1, posY, claims, minId):
-				frontier.append({'x':posX + 1, 'y':posY})
+				frontier.append({'x':posX + 1, 'y':posY, 'distance':getEuclideanDistance(posX, posY, centers[minId]['x'], centers[minId]['y'])})
 				
 			if isFrontier(posX - 1, posY, claims, minId):
-				frontier.append({'x':posX - 1, 'y':posY})
+				frontier.append({'x':posX - 1, 'y':posY, 'distance':getEuclideanDistance(posX, posY, centers[minId]['x'], centers[minId]['y'])})
 				
 			if isFrontier(posX, posY + 1, claims, minId):
-				frontier.append({'x':posX, 'y':posY + 1})
+				frontier.append({'x':posX, 'y':posY + 1, 'distance':getEuclideanDistance(posX, posY, centers[minId]['x'], centers[minId]['y'])})
 				
 			if isFrontier(posX, posY - 1, claims, minId):
-				frontier.append({'x':posX, 'y':posY - 1})
+				frontier.append({'x':posX, 'y':posY - 1, 'distance':getEuclideanDistance(posX, posY, centers[minId]['x'], centers[minId]['y'])})
 			
 	print scores
 
@@ -102,7 +158,7 @@ def getVoronoiClaims(regions, centers):
 				claims[y][x] = minCenter['id']
 	
 	
-	cedeTerritory(regions, claims, centers, int(float(len(regions) * len(regions[0])) / len(centers)) - 150)
+	cedeTerritory(regions, claims, centers, int(float(len(regions) * len(regions[0])) / len(centers)) - 50)
 	return claims
 
 
@@ -130,7 +186,7 @@ def claimRegion(x, y, id, claims, regions, totalClaims, frontier):
 # .5 : majority
 # .66 : hyper-majority
 def getPrimmsClaims(regions, centers, partyThreshold):
-	MIN_REGIONS = int(float(len(regions) * len(regions[0])) / len(centers)) - 150
+	MIN_REGIONS = int(float(len(regions) * len(regions[0])) / len(centers)) - 50
 	THRESHOLD_REGIONS = partyThreshold * MIN_REGIONS
 	
 	
