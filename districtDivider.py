@@ -32,11 +32,12 @@ def cedeTerritory(regions, claims, centers, MIN_REGIONS):
 	for y in claims:
 		for x in y:
 			scores[x] += 1
-			
-	print MIN_REGIONS
-						
-	while min(scores.iteritems(), key = lambda k: k[1])[1] < MIN_REGIONS:
-		minId = min(scores.iteritems(), key = lambda k : k[1])[0]
+				
+	
+	while len([f for f in scores if scores[f] < MIN_REGIONS]) != 0:
+		minRegions = [f for f in scores if scores[f] < MIN_REGIONS]
+		minId = minRegions[randint(0, len(minRegions) - 1)]
+		#minId = min(scores.iteritems(), key = lambda k : k[1])[0]
 		frontier = []
 		
 		#print minId, scores[minId], scores
@@ -83,7 +84,7 @@ def cedeTerritory(regions, claims, centers, MIN_REGIONS):
 			if isFrontier(posX, posY - 1, claims, minId):
 				frontier.append({'x':posX, 'y':posY - 1})
 			
-	print MIN_REGIONS, scores
+	print scores
 
 # Find voronoi regions
 def getVoronoiClaims(regions, centers):
@@ -100,7 +101,8 @@ def getVoronoiClaims(regions, centers):
 					minCenter = center
 				claims[y][x] = minCenter['id']
 	
-	#cedeTerritory(regions, claims, centers, int(float(len(regions) * len(regions[0])) / len(centers)) - 150)
+	
+	cedeTerritory(regions, claims, centers, int(float(len(regions) * len(regions[0])) / len(centers)) - 150)
 	return claims
 
 
@@ -167,7 +169,7 @@ def getPrimmsClaims(regions, centers, partyThreshold):
 			claimRegion(frontier['frontier'][f]['x'], frontier['frontier'][f]['y'], id, claims, regions, totalClaims, frontier)
 	
 	
-	#cedeTerritory(regions, claims, centers, MIN_REGIONS)
+	cedeTerritory(regions, claims, centers, MIN_REGIONS)
 	return claims
 	
 
