@@ -1,5 +1,6 @@
 from random import randint
 from math import ceil, pow, sqrt
+from logMsg import logMessage
 
 def getEuclideanDistance(p1x, p1y, p2x, p2y):
 	return sqrt(pow(p1x - p2x, 2) + pow(p1y - p2y, 2))
@@ -140,9 +141,9 @@ def scatterRemainder(region, count, party):
 		
 # Generate parties lines so b tends to form clusters and red forms the rest.
 def generateClusteredMap(sizeX, sizeY, clusters, parties, partyRatios):
-	print "Importing sklearn"
+	logMessage( "Importing sklearn")
 	from sklearn.datasets import make_blobs
-	print "import complete"
+	logMessage("import complete")
 	
 	region = [[parties[0] for x in xrange(sizeX)] for y in xrange(sizeY)]
 	

@@ -151,8 +151,6 @@ def cedeTerritory(regions, claims, centers, MIN_REGIONS):
 			if isFrontier(posX, posY - 1, claims, minId):
 				frontier.append((posX, posY - 1, getEuclideanDistance(posX, posY, centers[minId]['x'], centers[minId]['y'])))
 			
-	print scores
-
 # Find voronoi regions
 def getVoronoiClaims(regions, centers, cede):
 	claims = [['_' for x in xrange(len(regions[0]))] for y in xrange(len(regions))]

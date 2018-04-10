@@ -1,6 +1,9 @@
 from districtDivider import getVoronoiClaims, getPrimmsClaims
+from scoreMaps import getGeographicScore, getPopulationScores
 from mapMaker import generateRandomMap, generateClusteredMap, getRandomCenters, getManualCenters, assignCenters, assignIndex
 from drawMap import drawMap
+from logMsg import logMessage, setRunSilent
+import argparse
 
 
 simpleArea = [
@@ -27,97 +30,123 @@ def regionMenu():
 	# 3. Random Map, clustered distribution for blue
 	# 4. Build Map
 	
-	print 'What map would you like to compare?'
-	print '1. Prebuilt map'
-	print '2. Random map, equal populations between parties'
-	print '3. 2 party map with clustered distribution'
-	print '4. Build your own map'
+	
+	logMessage('What map would you like to compare?')
+	logMessage('1. Prebuilt map')
+	logMessage('2. Random map, equal populations between parties')
+	logMessage('3. 2 party map with clustered distribution')
+	logMessage('4. Build your own map')
 	
 	result = int(raw_input())
 	
 	if result == 1:
 		regions = simpleArea
 	elif result == 2:
-		print 'Size of map?'
+		logMessage('Size of map?')
 		size = int(raw_input())
-		print 'number of parties?'
+		logMessage('number of parties?')
 		parties = int(raw_input())
 		partyRatios = []
 		for i in xrange(parties):
-			print 'Member ratio for party', colors[i]
+			logMessage(['Member ratio for party', colors[i]])
 			partyRatios.append(float(raw_input()))
 		
 		regions = generateRandomMap(size, size, colors[:parties], partyRatios)
 	elif result == 3:
-		print 'Size of map?'
+		logMessage( 'Size of map?')
 		size = int(raw_input())
-		print 'number of clusters?'
+		logMessage('number of clusters?')
 		clusters = int(raw_input())
 		partyRatios = []
 		for i in xrange(2):
-			print 'Member ratio for party', colors[i]
+			logMessage(['Member ratio for party', colors[i]])
 			partyRatios.append(float(raw_input()))
 		
 		regions = generateClusteredMap(size, size, clusters, colors[:2], partyRatios)
 	elif result == 4:
-		print 'Not yet implemented'
+		logMessage('Not yet implemented')
 		return None
 	else:
-		print 'invalid input'
+		logMessage('invalid input')
 		return None
 	
 	return regions
 
 def centersMenu(regions):
-	print 'How would you like to assign district centers?'
-	print '1. Randomly with center radii'
-	print '2. Manually'
+	logMessage('How would you like to assign district centers?')
+	logMessage('1. Randomly with center radii')
+	logMessage('2. Manually')
 	result = int(raw_input())
 	
 	if result == 1:
-		print 'What is each district centers radius?'
+		logMessage('What is each district centers radius?')
 		rad = int(raw_input())
-		print 'How many district centers?'
+		logMessage('How many district centers?')
 		centerNum = int(raw_input())
 		return getRandomCenters(regions, rad, centerNum)
 	elif result == 2:
 		return getManualCenters(regions)
 	else:
-		print 'invalid input'
+		logMessage('invalid input')
 		return None
 	
 	
 def main():
+	parser = argparse.ArgumentParser()
+	parser.add_argument('-s', action='store_true')
+	args = parser.parse_args()
+	setRunSilent(args.s)
 	
 	regions = regionMenu()
 	
 	if regions is None:
 		return
 	
-	print '\nNow displaying region map, undivided'
+	
+	logMessage('\nNow displaying region map, undivided')
 	#drawMap(regions, None, None)
 	
 	centers = centersMenu(regions)
 	if centers is None:
 		return
 		
-	print 'For primms agents, what is the threshold ratio the agent must obtain before selecting frontiers randomly?'
+	logMessage('For primms agents, what is the threshold ratio the agent must obtain before selecting frontiers randomly?')
 	ratio = float(raw_input())
 	#drawMap(regions, None, centers)
 	
 	centers = assignCenters(regions, centers)
 	centers = assignIndex(centers)
 	
+	logMessage('Generating Voronoi (No territory change)...')
 	claimsC = getVoronoiClaims(regions, centers, False)
+	logMessage('Generating Voronoi (territory change)...')
 	claimsV = getVoronoiClaims(regions, centers, True)
+	logMessage('Generating Primms')
 	claimsP = getPrimmsClaims(regions, centers, ratio)
-	
-	drawMap(regions, claimsV, centers)
-	drawMap(regions, claimsP, centers)
 
+	logMessage('\n')
 	
-	#get voronoi solution
-	#get multiagent solutions
+	logMessage('Getting voronoi scores')
+	voronoiScore = { 'GeographicsScore':getGeographicScore(claimsV, claimsC), 
+		'LocalPopulationScore':getPopulationScores(regions, claimsV, centers)}
+	logMessage('\n')
+	
+	logMessage('Getting Primms scores')
+	primmsScore= { 'GeographicsScore': getGeographicScore(claimsP, claimsC), 
+		'LocalPopulationScore':getPopulationScores(regions, claimsP, centers)}
+	logMessage('\n')
+		
+	print 'voronoiScores:', voronoiScore
+	print 'Primms Score:', primmsScore
+	
+	
+	# print 'Displaying Voronoi (No Territory change)...'
+	# drawMap(regions, claimsC, centers)
+	# print 'Displaying Voronoi (Territory change)...'
+	# drawMap(regions, claimsV, centers)
+	# print 'Displaying Primms'
+	# drawMap(regions, claimsP, centers)
+	
 	
 	
 if __name__ == '__main__':

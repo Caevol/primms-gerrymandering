@@ -1,0 +1,13 @@
+Input:
+3
+50
+2
+.5
+.5
+1
+15
+4
+.5
+
+Output:
+Sample size 20:
