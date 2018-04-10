@@ -90,18 +90,26 @@ def cedeTerritory(regions, claims, centers, MIN_REGIONS):
 		#print minId
 
 		while scores[minId] < MIN_REGIONS and len(frontier) > 0:
+
 			
+			frontier = [f for f in frontier if claims[f['y']][f['x']] != minId]		
 			frontier = sorted(frontier, key = lambda g: scores[claims[g['y']][g['x']]])
-			frontier = [f for f in frontier if claims[f['y']][f['x']] != minId]
 			
 			i = 0
-			while claims[frontier[i]['y']][frontier[i]['x']] != claims[frontier[-1]['y']][frontier[-1]['x']]:
+			j = 0
+			
+			while claims[frontier[j]['y']][frontier[j]['x']] != claims[frontier[-1]['y']][frontier[-1]['x']]:
+				j += 1
+		
+			while i < len(frontier) and scores[claims[frontier[i]['y']][frontier[i]['x']]] <= MIN_REGIONS:
 				i += 1
 		
+			
+			
 			#rnd, rndVal = min(enumerate(frontier[i:]), key = lambda g: g[1]['distance'])
 			#frontier = sorted(frontier, key = lambda g : g['distance'], reverse = True)
 			#print rnd
-			rnd = randint(i, len(frontier) - 1)
+			rnd = randint(min(i,j), len(frontier) - 1)
 			pos = frontier[rnd]
 			posX = pos['x']
 			posY = pos['y']

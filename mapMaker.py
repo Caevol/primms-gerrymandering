@@ -140,8 +140,10 @@ def scatterRemainder(region, count, party):
 		
 # Generate parties lines so b tends to form clusters and red forms the rest.
 def generateClusteredMap(sizeX, sizeY, clusters, parties, partyRatios):
+	print "Importing sklearn"
 	from sklearn.datasets import make_blobs
-
+	print "import complete"
+	
 	region = [[parties[0] for x in xrange(sizeX)] for y in xrange(sizeY)]
 	
 	x,_ = make_blobs(n_samples = int(sizeX * sizeY * partyRatios[1]), 
