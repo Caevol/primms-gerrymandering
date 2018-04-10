@@ -101,13 +101,16 @@ def main():
 	if centers is None:
 		return
 		
+	print 'For primms agents, what is the threshold ratio the agent must obtain before selecting frontiers randomly?'
+	ratio = float(raw_input())
 	#drawMap(regions, None, centers)
 	
 	centers = assignCenters(regions, centers)
 	centers = assignIndex(centers)
 	
-	claimsV = getVoronoiClaims(regions, centers)
-	claimsP = getPrimmsClaims(regions, centers, .3)
+	claimsC = getVoronoiClaims(regions, centers, False)
+	claimsV = getVoronoiClaims(regions, centers, True)
+	claimsP = getPrimmsClaims(regions, centers, ratio)
 	
 	drawMap(regions, claimsV, centers)
 	drawMap(regions, claimsP, centers)
