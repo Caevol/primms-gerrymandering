@@ -94,8 +94,10 @@ def centersMenu(regions):
 def main():
 	parser = argparse.ArgumentParser()
 	parser.add_argument('-s', action='store_true')
+	parser.add_argument('-draw', action='store_true')
 	args = parser.parse_args()
 	setRunSilent(args.s)
+	drawGraphs = args.draw
 	
 	regions = regionMenu()
 	
@@ -139,14 +141,14 @@ def main():
 	print 'voronoiScores:', voronoiScore
 	print 'Primms Score:', primmsScore
 	
-	
-	# print 'Displaying Voronoi (No Territory change)...'
-	# drawMap(regions, claimsC, centers)
-	# print 'Displaying Voronoi (Territory change)...'
-	# drawMap(regions, claimsV, centers)
-	# print 'Displaying Primms'
-	# drawMap(regions, claimsP, centers)
-	
+	if drawGraphs:
+		logMessage('Displaying Voronoi (No Territory change)...')
+		drawMap(regions, claimsC, centers)
+		logMessage('Displaying Voronoi (Territory change)...')
+		drawMap(regions, claimsV, centers)
+		logMessage('Displaying Primms')
+		drawMap(regions, claimsP, centers)
+		
 	
 	
 if __name__ == '__main__':
