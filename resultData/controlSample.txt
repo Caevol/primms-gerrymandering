@@ -1,0 +1,75 @@
+Input:
+3
+100
+4
+.5
+.5
+1
+30
+8
+.5
+
+Output:
+
+
+
+
+voronoiScores: {'LocalPopulationScore': 0.625, 'GeographicsScore': 0.8961}
+Primms Score: {'LocalPopulationScore': 1.0, 'GeographicsScore': 0.7269}
+
+voronoiScores: {'LocalPopulationScore': 1.0, 'GeographicsScore': 0.8226}
+Primms Score: {'LocalPopulationScore': 1.0, 'GeographicsScore': 0.7061}
+
+voronoiScores: {'LocalPopulationScore': 0.875, 'GeographicsScore': 0.9428}
+Primms Score: {'LocalPopulationScore': 1.0, 'GeographicsScore': 0.7682}
+
+voronoiScores: {'LocalPopulationScore': 0.875, 'GeographicsScore': 0.849}
+Primms Score: {'LocalPopulationScore': 0.875, 'GeographicsScore': 0.7058}
+
+voronoiScores: {'LocalPopulationScore': 0.625, 'GeographicsScore': 0.9267}
+Primms Score: {'LocalPopulationScore': 1.0, 'GeographicsScore': 0.6156}
+
+voronoiScores: {'LocalPopulationScore': 0.625, 'GeographicsScore': 0.9175}
+Primms Score: {'LocalPopulationScore': 0.875, 'GeographicsScore': 0.7615}
+
+voronoiScores: {'LocalPopulationScore': 0.875, 'GeographicsScore': 0.9569}
+Primms Score: {'LocalPopulationScore': 0.875, 'GeographicsScore': 0.6851}
+
+voronoiScores: {'LocalPopulationScore': 0.75, 'GeographicsScore': 0.924}
+Primms Score: {'LocalPopulationScore': 1.0, 'GeographicsScore': 0.7118}
+
+voronoiScores: {'LocalPopulationScore': 0.5, 'GeographicsScore': 0.8737}
+Primms Score: {'LocalPopulationScore': 0.75, 'GeographicsScore': 0.7474}
+
+voronoiScores: {'LocalPopulationScore': 1.0, 'GeographicsScore': 0.9274}
+Primms Score: {'LocalPopulationScore': 1.0, 'GeographicsScore': 0.7838}
+
+voronoiScores: {'LocalPopulationScore': 0.875, 'GeographicsScore': 0.9068}
+Primms Score: {'LocalPopulationScore': 1.0, 'GeographicsScore': 0.7706}
+
+voronoiScores: {'LocalPopulationScore': 1.0, 'GeographicsScore': 0.9722}
+Primms Score: {'LocalPopulationScore': 1.0, 'GeographicsScore': 0.8505}
+
+voronoiScores: {'LocalPopulationScore': 0.875, 'GeographicsScore': 0.874}
+Primms Score: {'LocalPopulationScore': 1.0, 'GeographicsScore': 0.7286}
+
+voronoiScores: {'LocalPopulationScore': 1.0, 'GeographicsScore': 0.9392}
+Primms Score: {'LocalPopulationScore': 1.0, 'GeographicsScore': 0.8134}
+
+voronoiScores: {'LocalPopulationScore': 0.5, 'GeographicsScore': 0.8966}
+Primms Score: {'LocalPopulationScore': 0.875, 'GeographicsScore': 0.683}
+
+voronoiScores: {'LocalPopulationScore': 0.75, 'GeographicsScore': 0.9191}
+Primms Score: {'LocalPopulationScore': 0.875, 'GeographicsScore': 0.7887}
+
+voronoiScores: {'LocalPopulationScore': 1.0, 'GeographicsScore': 0.9664}
+Primms Score: {'LocalPopulationScore': 1.0, 'GeographicsScore': 0.7664}
+
+voronoiScores: {'LocalPopulationScore': 0.75, 'GeographicsScore': 0.857}
+Primms Score: {'LocalPopulationScore': 0.875, 'GeographicsScore': 0.755}
+
+voronoiScores: {'LocalPopulationScore': 0.75, 'GeographicsScore': 0.8534}
+Primms Score: {'LocalPopulationScore': 0.75, 'GeographicsScore': 0.6356}
+7
+voronoiScores: {'LocalPopulationScore': 0.875, 'GeographicsScore': 0.909}
+Primms Score: {'LocalPopulationScore': 1.0, 'GeographicsScore': 0.7738}

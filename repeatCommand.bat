@@ -1,1 +1,1 @@
-FOR /L %%A IN (1,1,20) DO python main.py -s < clusteredInput.txt
+FOR /L %%A IN (1,1,20) DO python main.py -s < clusteredInput.txt >> resultData\bigCityPop.txt
