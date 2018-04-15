@@ -89,8 +89,8 @@ def centersMenu(regions):
 	
 def main():
 	parser = argparse.ArgumentParser()
-	parser.add_argument('-s', action='store_true')
-	parser.add_argument('-draw', action='store_true')
+	parser.add_argument('-s', action='store_true', help='run program silently, only output results')
+	parser.add_argument('-draw', action='store_true', help='draws district division maps')
 	args = parser.parse_args()
 	setRunSilent(args.s)
 	drawGraphs = args.draw

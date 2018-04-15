@@ -83,16 +83,16 @@ def getRandomCenters(region, radius, centerCount):
 	return centers
 
 def getManualCenters(region):
-	print 'How many districts?'
+	logMessage( 'How many districts?')
 	districtNum = int(raw_input())
 	
 	centers = []
 	
 	for i in xrange(districtNum):
-		print 'Center', i
-		print 'x:'
+		logMessage(('Center', i))
+		logMessage('x:')
 		x = int(raw_input())
-		print 'y:'
+		logMessage('y:')
 		y = int(raw_input())
 		centers.append({'x':x,'y':y})
 
