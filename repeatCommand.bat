@@ -1,1 +1,1 @@
-FOR /L %%A IN (1,1,20) DO python main.py -s < input.txt >> resultData\bigCityPop.txt
+FOR /L %%A IN (1,1,20) DO python main.py -s < input.txt >> resultData\randomPrimms.txt
