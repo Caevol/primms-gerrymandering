@@ -35,7 +35,6 @@ def regionMenu():
 	logMessage('1. Prebuilt map')
 	logMessage('2. Random map, equal populations between parties')
 	logMessage('3. 2 party map with clustered distribution')
-	logMessage('4. Build your own map')
 	
 	result = int(raw_input())
 	
@@ -63,9 +62,6 @@ def regionMenu():
 			partyRatios.append(float(raw_input()))
 		
 		regions = generateClusteredMap(size, size, clusters, colors[:2], partyRatios)
-	elif result == 4:
-		logMessage('Not yet implemented')
-		return None
 	else:
 		logMessage('invalid input')
 		return None
